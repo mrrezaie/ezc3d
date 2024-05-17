@@ -78,7 +78,7 @@ ezc3d::ParametersNS::Parameters::Parameters(
         // Check if we spontaneously got to the next parameter.
         // Otherwise c3d is messed up
         if (!ignoreBadFormatting && file.tellg() != nextParamByteInFile){
-            throw std::ios_base::failure("Bad c3d formatting");
+            throw std::ios_base::failure("The format is not standard. If you want to ignore this error, set ignoreBadFormatting to true");
         }
 
         // Nb of char in the group name, locked if negative,
