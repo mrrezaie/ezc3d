@@ -61,7 +61,7 @@ ezc3d::c3d::c3d(
     c_int_tp = std::vector<char>(m_nByteToReadMax_int + 1);
 
     if (!stream.is_open())
-        throw std::ios_base::failure("Could not open the c3d file");
+        throw std::ios_base::failure("The c3d file could not be opened, please verify the path");
 
     // Read all the section
     _header = std::shared_ptr<ezc3d::Header>(new ezc3d::Header(*this, stream));
