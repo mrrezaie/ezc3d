@@ -2,7 +2,7 @@ import numpy as np
 
 import ezc3d
 
-# Load an empty c3d structure
+# Create an empty c3d structure
 c3d = ezc3d.c3d()
 
 # Adjust some mandatory values of the parameters and fill the data with random values
