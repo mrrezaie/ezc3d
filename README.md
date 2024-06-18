@@ -469,7 +469,7 @@ Python (https://www.python.org/) is a scripting language that has taken more and
 
 To interface the C++ code with Python, SWIG is a great tool. It creates very rapidly an interface in the target language with minimal code to write. However, the resulting code in the target language can be far from being easy to use. In effect, it gives a mixed-API not far from the original C++ language, which may not comply to best practices of the target language. When this is useful to rapidly create an interface, it lacks of user-friendliness. EZC3D interfaces the C++ code using SWIG, but add a more pythonic layer on top of it. This top layer is not mandatory for the user (it is possible to call directly the SWIG interface via `ezc3d.ezc3d` instead of `ezc3d.c3d`), but the time lost to organized the data into a dictionary is insignificant compared to the ease of use this interface provides. I therefore strongly suggest to used this python interface. 
 
-Please note, to navigate the c3d struture provided by the interface, the easiest way is to use the `keys()` method since this is a dictionary. 
+Please note, to navigate the c3d struture provided by the interface, the easiest way is to use the attribute (using the autocompletion if your IDE allows it). As an alternative, you can access all the properties using the dictionary notation and get the keys using the `keys()` method since. 
 
 ### Create an empty yet valid C3D structure
 To create a new valid yet empty C3D, just call the `ezc3d.c3d()` method without any argument. 
