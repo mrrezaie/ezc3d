@@ -5,7 +5,7 @@ dir_path = os.path.dirname(os.path.realpath(__file__))
 
 with open(f"{dir_path}/CMakeLists.txt") as file:
     for line in file:
-        match = re.search("project\(ezc3d VERSION ([0-9].[0-9].[0-9])\)", line)
+        match = re.search(re.compile("project\\(ezc3d VERSION (\\d*\\.\\d*\\.\\d*)\\)"), line)
         if match is not None:
             version = match[1]
             break
