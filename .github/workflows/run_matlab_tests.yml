@@ -1,15 +1,16 @@
-name: Run the tests
+name: Run the Matlab tests
 
 on: [pull_request]
 
 env:
   BUILD_FOLDER: build
-  EXAMPLES_FOLDER: examples
 
 jobs:
   build:
     strategy:
       matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        version: [R2021b, R2022a, R2022b, R2023a, R2023b, R2024a]
         include:
           - os: ubuntu-latest
             label: linux-64
@@ -20,14 +21,20 @@ jobs:
           - os: windows-latest
             label: win-64
             prefix: C:\Miniconda3\envs\ezc3d
-    name: ${{ matrix.label }}
+        exclude:
+          - os: macos-latest
+            version: R2023b
+          - os: macos-latest
+            version: R2024a
+    name: ${{ matrix.label }}_${{ matrix.version }}
     runs-on: ${{ matrix.os }}
     defaults:
       run:
         shell: bash -l {0}
     steps:
-      - uses: actions/checkout@v2
-        
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
       - name: Get number of CPU cores
         uses: SimenB/github-actions-cpu-cores@v1
         id: cpu-cores
@@ -38,71 +45,56 @@ jobs:
           miniforge-variant: Mambaforge
           miniforge-version: latest
           use-mamba: true
-          activate-environment: ezc3d
-          environment-file: environment.yml
         
       - name: Print mamba info
         run: | 
           mamba info
           mamba list
           
-      - name: Install extra common dependencies
+      - name: Install dependencies
         run: | 
-          mamba install cmake git pkgconfig swig numpy pytest -cconda-forge
+          mamba install cmake git pkgconfig -cconda-forge
           mamba list
           git submodule update --init --recursive
 
-      - name: Build ezc3d UNIX
+      - name: Install MATLAB
+        uses: matlab-actions/setup-matlab@v2
+        with:
+          release: ${{ matrix.version }}
+
+      - name: Build ezc3d on UNIX
         run: |
           MAIN_FOLDER=`pwd`
+          cd
+          HOME=`pwd`
+          cd $MAIN_FOLDER
           CONDA_ENV_PATH=$CONDA/envs/ezc3d
           mkdir -p $MAIN_FOLDER/$BUILD_FOLDER
           cd $MAIN_FOLDER/$BUILD_FOLDER
-          cmake -DCMAKE_INSTALL_PREFIX=$CONDA_ENV_PATH -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTS=ON -DBUILD_DOC=OFF -DBUILD_EXAMPLE=ON -DUSE_MATRIX_FAST_ACCESSOR=OFF -DBINDER_OCTAVE=OFF -DBINDER_PYTHON3=ON ..
+          cmake -DCMAKE_INSTALL_PREFIX=$CONDA_ENV_PATH -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTS=OFF -DBUILD_DOC=OFF -DBUILD_EXAMPLE=OFF -DUSE_MATRIX_FAST_ACCESSOR=OFF -DBINDER_MATLAB=ON -DMatlab_ezc3d_INSTALL_DIR=$HOME -DBINDER_PYTHON3=OFF ..
           make install -j${{ steps.cpu-cores.outputs.count }}
           cd $MAIN_FOLDER
         if: matrix.label != 'win-64'
-       
-      - name: Run tests UNIX
-        run: |
-          MAIN_FOLDER=`pwd`
-          cd $MAIN_FOLDER/$BUILD_FOLDER/test
-          ./ezc3d_test
-          cd $MAIN_FOLDER
-        if: matrix.label != 'win-64'
-
-      - name: Build ezc3d WINDOWS
+      
+      - name: Build ezc3d on WINDOWS
         run: |
           MAIN_FOLDER=`pwd`
           CONDA_ENV_PATH=$CONDA/envs/ezc3d
           mkdir -p $BUILD_FOLDER
           cd $BUILD_FOLDER
-          cmake -G"Visual Studio 17 2022" -Ax64 -DCMAKE_INSTALL_PREFIX=$CONDA_ENV_PATH -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTS=ON -DBUILD_DOC=OFF -DBUILD_EXAMPLE=ON -DUSE_MATRIX_FAST_ACCESSOR=OFF -DBINDER_OCTAVE=OFF -DBINDER_PYTHON3=ON ..
+          cmake -G"Visual Studio 17 2022" -Ax64 -DCMAKE_INSTALL_PREFIX=$CONDA_ENV_PATH -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTS=OFF -DBUILD_DOC=OFF -DBUILD_EXAMPLE=OFF -DUSE_MATRIX_FAST_ACCESSOR=OFF -DBINDER_MATLAB=ON -DMatlab_ezc3d_INSTALL_DIR=$HOME -DBINDER_PYTHON3=OFF ..
           cmake --build . --config Release --target install -j${{ steps.cpu-cores.outputs.count }}
           cd $MAIN_FOLDER
         if: matrix.label == 'win-64'
 
-      - name: Run tests WINDOWS
+      - name: Run the MATLAB binder tests
         run: |
-          MAIN_FOLDER=`pwd`
-          cd $MAIN_FOLDER/$BUILD_FOLDER/test
-          cp $MAIN_FOLDER/$BUILD_FOLDER/Release/*.dll .
-          cp $MAIN_FOLDER/$BUILD_FOLDER/bin/Release/*.dll .
-          cp Release/ezc3d_test.exe .
-          ./ezc3d_test.exe
-          cd $MAIN_FOLDER
-        if: matrix.label == 'win-64'
-    
-      - name: Run python binder tests 
-        run: |
-          MAIN_FOLDER=`pwd`
-          cd $MAIN_FOLDER/$BUILD_FOLDER
-          pytest -v --color=yes $MAIN_FOLDER/test/python3
-          cd $MAIN_FOLDER
-
-      - name: Test installed version of python
-        run: | 
           MAIN_FOLDER=`pwd`
           cd
-          python -c "import ezc3d"
+          HOME=`pwd`
+          cd $MAIN_FOLDER/test/matlab
+          cp $HOME/ezc3d_matlab/* .
+          # We cannot run the tests as we do not have a license. They are however run on octave
+          # matlab -batch test_binder_matlab.m
+          # matlab -batch test_binder_matlab_force_platform.m
           cd $MAIN_FOLDER
