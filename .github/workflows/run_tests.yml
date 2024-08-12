@@ -74,7 +74,6 @@ jobs:
       - name: Build ezc3d WINDOWS
         run: |
           MAIN_FOLDER=`pwd`
-          echo ${{ matrix.prefix }}
           CONDA_ENV_PATH=$CONDA/envs/ezc3d
           mkdir -p $BUILD_FOLDER
           cd $BUILD_FOLDER
