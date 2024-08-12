@@ -12,7 +12,6 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest, macos-latest, windows-latest]
-        version: [R2021b, R2022a, R2022b, R2023a, R2023b, R2024a]
         include:
           - os: ubuntu-latest
             label: linux-64
@@ -23,12 +22,7 @@ jobs:
           - os: windows-latest
             label: win-64
             prefix: C:\Miniconda3\envs\ezc3d
-        exclude:
-          - os: macos-latest
-            version: R2023b
-          - os: macos-latest
-            version: R2024a
-    name: ${{ matrix.label }}_${{ matrix.version }}
+    name: ${{ matrix.label }}
     runs-on: ${{ matrix.os }}
     defaults:
       run:
@@ -59,10 +53,15 @@ jobs:
           mamba list
           git submodule update --init --recursive
 
-      - name: Install MATLAB
+      - name: Install MATLAB on WINDOWS and LINUX
+        uses: matlab-actions/setup-matlab@v2
+        if: matrix.label != 'osx-64'
+
+      - name: Install MATLAB on MACOS
         uses: matlab-actions/setup-matlab@v2
         with:
-          release: ${{ matrix.version }}
+          release: R2023a
+        if: matrix.label == 'osx-64'
 
       - name: Build ezc3d on UNIX
         run: |
@@ -91,12 +90,12 @@ jobs:
 
       - name: Build MATLAB archives on UNIX
         run: |
-          zip -r ezc3d_matlab_${{ matrix.label }}_${{ matrix.version }}.zip $HOME/ezc3d_matlab
+          zip -r ezc3d_matlab_${{ matrix.label }}.zip $HOME/ezc3d_matlab
         if: matrix.label != 'win-64'
 
       - name: Build MATLAB archives on WINDOWS
         run: |
-          7z a ezc3d_matlab_${{ matrix.label }}_${{ matrix.version }}.zip $HOME/ezc3d_matlab
+          7z a ezc3d_matlab_${{ matrix.label }}.zip $HOME/ezc3d_matlab
         if: matrix.label == 'win-64'
 
       - name: Upload files to a GitHub release
@@ -104,7 +103,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          file: "ezc3d_matlab_${{ matrix.label }}_${{ matrix.version }}.zip"
+          file: "ezc3d_matlab_${{ matrix.label }}.zip"
           update_latest_release: true
           verbose: true
           overwrite: true
