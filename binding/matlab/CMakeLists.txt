@@ -51,17 +51,19 @@ foreach(SUFFIXES Read Write)
             )
         endif(CMAKE_CL_64)
     elseif(APPLE)
-        if (CMAKE_SIZEOF_VOID_P MATCHES "8")
+        if (CMAKE_SYSTEM_PROCESSOR STREQUAL "x86_64")
             set_target_properties(${PROJECT_NAME}_${SUFFIXES} PROPERTIES
                 SUFFIX ".mexmaci64"
                 PREFIX ""
             )
-        else(CMAKE_SIZEOF_VOID_P MATCHES "8")
+        elseif(CMAKE_SYSTEM_PROCESSOR STREQUAL "arm64") 
             set_target_properties(${PROJECT_NAME}_${SUFFIXES} PROPERTIES
-                SUFFIX ".mexmaci64"
+                SUFFIX ".mexmaca64"
                 PREFIX ""
             )
-        endif (CMAKE_SIZEOF_VOID_P MATCHES "8")
+        else()
+            message(FATAL_ERROR "Unknown architecture: ${CMAKE_SYSTEM_PROCESSOR}") 
+        endif ()
     else()
         if (CMAKE_SIZEOF_VOID_P MATCHES "8")
             set_target_properties(${PROJECT_NAME}_${SUFFIXES} PROPERTIES
@@ -109,6 +111,3 @@ install(FILES "${CMAKE_CURRENT_SOURCE_DIR}/ezc3dNewParam.m"
     DESTINATION "${Matlab_${EZC3D_NAME}_INSTALL_DIR}/${PROJECT_NAME}")
 install(FILES "${CMAKE_CURRENT_SOURCE_DIR}/ezc3dAddEvent.m"
     DESTINATION "${Matlab_${EZC3D_NAME}_INSTALL_DIR}/${PROJECT_NAME}")
-
-
-
