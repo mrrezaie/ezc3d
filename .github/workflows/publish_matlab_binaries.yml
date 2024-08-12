@@ -91,7 +91,7 @@ jobs:
 
       - name: Build MATLAB archives
         run: |
-          zip -r ezc3d_matlab.zip $HOME/ezc3d_matlab
+          zip -r ezc3d_matlab_${{ matrix.label }}_${{ matrix.version }}.zip $HOME/ezc3d_matlab
 
       - name: Upload files to a GitHub release
         uses: xresloader/upload-to-github-release@v1
