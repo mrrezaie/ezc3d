@@ -89,9 +89,15 @@ jobs:
           cd $MAIN_FOLDER
         if: matrix.label == 'win-64'
 
-      - name: Build MATLAB archives
+      - name: Build MATLAB archives on UNIX
         run: |
           zip -r ezc3d_matlab_${{ matrix.label }}_${{ matrix.version }}.zip $HOME/ezc3d_matlab
+        if: matrix.label != 'win-64'
+
+      - name: Build MATLAB archives on WINDOWS
+        run: |
+          7z a ezc3d_matlab_${{ matrix.label }}_${{ matrix.version }}.zip $HOME/ezc3d_matlab
+        if: matrix.label == 'win-64'
 
       - name: Upload files to a GitHub release
         uses: xresloader/upload-to-github-release@v1
