@@ -14,10 +14,10 @@ jobs:
           - os: ubuntu-latest
             label: linux-64
             prefix: /usr/share/miniconda3/envs/ezc3d
-          - os: macos-latest
+          - os: macos-14-arm64
             label: osx-arm64
             prefix: /Users/runner/miniconda3/envs/ezc3d
-          - os: macos-13
+          - os: macos-14
             label: osx-intel
             prefix: /Users/runner/miniconda3/envs/ezc3d
           - os: windows-latest
