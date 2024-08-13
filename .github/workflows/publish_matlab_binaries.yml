@@ -56,15 +56,15 @@ jobs:
           mamba list
           git submodule update --init --recursive
 
-      - name: Install MATLAB on WINDOWS and LINUX
+      - name: Install MATLAB on WINDOWS, LINUX and MACOS-Intel
         uses: matlab-actions/setup-matlab@v2
-        if: matrix.label != 'osx-64'
+        if: matrix.label != 'osx-arm64' 
 
-      - name: Install MATLAB on MACOS
+      - name: Install MATLAB on MACOS-arm64
         uses: matlab-actions/setup-matlab@v2
         with:
           release: R2023a
-        if: matrix.label == 'osx-64'
+        if: matrix.label == 'osx-arm64'
 
       - name: Build ezc3d on UNIX
         run: |
