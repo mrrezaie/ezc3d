@@ -14,8 +14,8 @@ So, without further ado, let's begin C3Ding!
 
 # Table of Contents  
 [How to install](#how-to-install)
-- [Anaconda](#anaconda-for-windows-linux-and-Mac)
-- [Compiling](#compiling-for-windows-linux-and-mac)Py
+- [Anaconda](#anaconda-for-python-users-on-windows-linux-and-mac)
+- [Compiling](#compiling-for-windows-linux-and-mac)
 
 [How to use](#how-to-use)
 - [The C++ API](#the-c-api)
@@ -36,10 +36,10 @@ So, without further ado, let's begin C3Ding!
 ## Headers
 
 # How to install
-There are two main ways to install EZC3D on your computer: installing the binaries from Anaconda (easiest) or compiling the source code yourself (more versatile and up to date).
+There are two main ways to install EZC3D on your computer: the easy method, installing the binaries from Anaconda (Python users) or from the Release page (Matlab users); or the hard method, compiling the source code yourself (more versatile and up to date).
 
-## Anaconda (For Windows, Linux and Mac)
-The easiest way to install EZC3D is to download the binaries from anaconda (https://anaconda.org/) repositories (while binaries are available for Python3 and Octave, there are not any for MATLAB, apart from using the mex file produced for Octave). The project is hosted on the conda-forge channel (https://anaconda.org/conda-forge/ezc3d).
+## Anaconda (For Python users on Windows, Linux and Mac)
+For Python users, the easiest way to install EZC3D is to download the binaries from anaconda (https://anaconda.org/) repositories (while binaries are available for Python3 and Octave, there are not any for MATLAB, apart from using the mex file produced for Octave). The project is hosted on the conda-forge channel (https://anaconda.org/conda-forge/ezc3d).
 
 After having installed properly an anaconda client [my suggestion would be Miniconda (https://conda.io/miniconda.html)] and loaded the desired environment to install EZC3D in, just type the following command for installing the Python3 binaries:
 ```bash
@@ -51,7 +51,7 @@ conda install -c conda-forge ezc3d=*=*octave*
 ```
 The binaries and includes of the core of EZC3D will be installed in `bin` and `include` folders of the environment respectively. Moreover, the Python3 or Octave binder will also be installed in the environment.
 
-DEPRECATED: As a workaround, that it is possible to use the Octave binaries in MATLAB. The `.mex` extension must however be changed according to your operating system, namely `mexw32` or `.mexw64` for Windows (32 or 64-bits), `.mexmaci64` for MacOSX and `.mexa64` for Linux. This seems to recently have stopped working since MATLAB changed their API (earlier than R2021b?).
+DEPRECATED: As a workaround, that it is possible to use the Octave binaries in MATLAB. The `.mex` extension must however be changed according to your operating system, namely `mexw32` or `.mexw64` for Windows (32 or 64-bits), `.mexmaci64` or `.mexmaca64` for MacOSX and `.mexa64` for Linux. This seems to recently have stopped working since MATLAB changed their API (earlier than R2021b?). Please refer to [Download binaries](#download-binaries-for-matlab-users-on-windows-linux-and-mac).
 
 
 The current building status for Anaconda release is as follow.
@@ -59,6 +59,11 @@ The current building status for Anaconda release is as follow.
 | Name | Downloads | Version | Platforms |
 | --- | --- | --- | --- |
 | [![Conda Recipe](https://img.shields.io/badge/recipe-ezc3d-green.svg)](https://anaconda.org/conda-forge/ezc3d) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/ezc3d.svg)](https://anaconda.org/conda-forge/ezc3d) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/ezc3d.svg)](https://anaconda.org/conda-forge/ezc3d) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/ezc3d.svg)](https://anaconda.org/conda-forge/ezc3d) |
+
+## Download binaries (For MATLAB users on Windows, Linux and Mac)
+The MATLAB users can download the binaries directly from the Release page of `ezc3d` at this URL: [https://github.com/pyomeca/ezc3d/releases/latest](https://github.com/pyomeca/ezc3d/releases/latest). 
+
+Once the folder is download, you simply unzip it, add it to the MATLAB's path and enjoy ezc3d!
 
 ## Compiling (For Windows, Linux and Mac)
 The main drawback with downloading the pre-compiled version from Anaconda is that it may be out-of-date. Moreover, since it is already compiled, it doesn't allow you to modify EZC3D if you need it. Therefore, a more versatile way to enjoy EZC3D is to compile it by yourself.
