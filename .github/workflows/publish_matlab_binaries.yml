@@ -90,7 +90,7 @@ jobs:
 
       - name: Build MATLAB archives on UNIX
         run: |
-          cp -r $HOME/ezc3d_matlab/ .
+          cp -r $HOME/ezc3d_matlab .
           zip -r ezc3d_matlab_${{ matrix.label }}.zip ezc3d_matlab
         if: matrix.label != 'win-64'
 
