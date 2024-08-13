@@ -63,7 +63,9 @@ The current building status for Anaconda release is as follow.
 ## Download binaries (For MATLAB users on Windows, Linux and Mac)
 The MATLAB users can download the binaries directly from the Release page of `ezc3d` at this URL: [https://github.com/pyomeca/ezc3d/releases/latest](https://github.com/pyomeca/ezc3d/releases/latest). 
 
-Once the folder is download, you simply unzip it, add it to the MATLAB's path and enjoy ezc3d!
+Once the folder is downloaded, you simply unzip it, add it to the MATLAB's path, and enjoy ezc3d!
+
+https://github.com/user-attachments/assets/9abf62db-f750-41de-80a9-b421daad2dfa
 
 ## Compiling (For Windows, Linux and Mac)
 The main drawback with downloading the pre-compiled version from Anaconda is that it may be out-of-date. Moreover, since it is already compiled, it doesn't allow you to modify EZC3D if you need it. Therefore, a more versatile way to enjoy EZC3D is to compile it by yourself.
