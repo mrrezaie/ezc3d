@@ -13,25 +13,50 @@ You can get the online version of the paper for EZC3D here: [![DOI](https://joss
 So, without further ado, let's begin C3Ding!
 
 # Table of Contents  
-[How to install](#how-to-install)
-- [Anaconda](#anaconda-for-python-users-on-windows-linux-and-mac)
-- [Compiling](#compiling-for-windows-linux-and-mac)
+- [EZC3D](#ezc3d)
+- [Table of Contents](#table-of-contents)
+  - [Headers](#headers)
+- [How to install](#how-to-install)
+  - [Anaconda (For Python users on Windows, Linux and Mac)](#anaconda-for-python-users-on-windows-linux-and-mac)
+  - [Download binaries (For MATLAB users on Windows, Linux and Mac)](#download-binaries-for-matlab-users-on-windows-linux-and-mac)
+  - [Compiling (For Windows, Linux and Mac)](#compiling-for-windows-linux-and-mac)
+  - [Compile via `setup.py`](#compile-via-setuppy)
+- [How to use](#how-to-use)
+  - [The C++ API](#the-c-api)
+    - [Create an empty yet valid C3D structure](#create-an-empty-yet-valid-c3d-structure)
+    - [Read a C3D](#read-a-c3d)
+    - [Write a C3D](#write-a-c3d)
+    - [Navigating through the C3D class](#navigating-through-the-c3d-class)
+    - [Copying the C3D class](#copying-the-c3d-class)
+    - [Force platform filter](#force-platform-filter)
+  - [MATLAB](#matlab)
+    - [Create an empty yet valid C3D structure](#create-an-empty-yet-valid-c3d-structure-1)
+    - [Read a C3D](#read-a-c3d-1)
+    - [Write a C3D](#write-a-c3d-1)
+    - [Force platform filter](#force-platform-filter-1)
+  - [Octave](#octave)
+  - [Python 3](#python-3)
+    - [Create an empty yet valid C3D structure](#create-an-empty-yet-valid-c3d-structure-2)
+    - [Read a C3D](#read-a-c3d-2)
+    - [Write a C3D](#write-a-c3d-2)
+    - [Force platform filter](#force-platform-filter-2)
+- [How to contribute](#how-to-contribute)
+  - [Using the test suite](#using-the-test-suite)
+  - [Running the tests](#running-the-tests)
+  - [Tests for the binders](#tests-for-the-binders)
+    - [Matlab/Octave](#matlaboctave)
+    - [Python](#python)
+- [Supported generated C3D](#supported-generated-c3d)
+- [Documentation](#documentation)
+  - [EZC3D](#ezc3d-1)
+  - [C3D format](#c3d-format)
+- [Support](#support)
+  - [Report issues](#report-issues)
+  - [Known issues](#known-issues)
+    - [Slow C3D opening](#slow-c3d-opening)
+    - [Non-working C3D](#non-working-c3d)
+- [Cite](#cite)
 
-[How to use](#how-to-use)
-- [The C++ API](#the-c-api)
-- [MATLAB](#matlab)
-- [Octave](#octave)
-- [Python 3](#python-3)
-
-[How to contribute](#how-to-contribute)
-
-[Supported generated C3D](#supported-generated-c3d)
-
-[Documentation](#documentation)
-
-[Support](#support)
-
-[Cite](#cite)
 
 ## Headers
 
@@ -78,15 +103,7 @@ The building status for the current EZC3D branches is as follow
 | Test coverage | [![codecov](https://codecov.io/gh/pyomeca/ezc3d/branch/dev/graph/badge.svg?token=fc2ZGOexD1)](https://codecov.io/gh/pyomeca/ezc3d) |
 | DOI | [![DOI](https://zenodo.org/badge/131555942.svg)](https://zenodo.org/badge/latestdoi/131555942) |
 
-## Compile via `setup.py`
-This way of "installing" is mostly for convenience when developing on ezc3d and the python-wrapper. It is **not** recommended for normal usage. Refer to [Anaconda](#anaconda-for-windows-linux-and-mac) for that.
-
-The call is similar to the following (example for windows). (`pip install` is **not** supported)
-```powershell
-python .\setup.py develop -- -G"Visual Studio 16 2019" -A x64 -DSWIG_EXECUTABLE="D:/swigwin-4.0.2/swig.exe" -DSWIG_DIR="D:/swigwin-4.0.2/Lib"
-```
-
-### Dependencies
+### Dependencies <!-- omit from toc -->
 EZC3D does not rely on any external dependency. However, it comes in the form of a CMake (https://cmake.org/) project. Consequently, CMake must be installed on your computer to compile EZC3D. It can be installed from the official website or by Anaconda using the following command:
 ```bash
 conda install -c conda-forge cmake
@@ -108,7 +125,7 @@ conda install -c conda-forge octave
 On Windows, one is required to manually install it from the website
 
 
-### CMake
+### CMake <!-- omit from toc -->
 EZC3D comes in the form of a CMake (https://cmake.org/) project. If you don't know how to use CMake, you will find many examples on Internet. For the Windows user, a quick video was made to show how to compile for the MATLAB binder [here](https://youtu.be/gWno_NXrITA). Please note that the video is made from a french computer. This should not impair the workflow, but may be a bit confusing for some english folks!
 
 The cmake variables to set are:
@@ -156,11 +173,19 @@ Then, you can run MATLAB from the same terminal. Or if you want to run MATLAB fr
 cd /usr/local/MATLAB/R2022b/sys/os/glnxa64
 ln -s /lib/x86_64-linux-gnu/libstdc++.so.6
 ```
-### VCPKG (For Windows, Linux and Mac)
+### VCPKG (For Windows, Linux and Mac) <!-- omit from toc -->
 
 An automated script for compilation is offered on vcpkg. Install vcpkg by making a local clone from its GitHub repo [https://github.com/Microsoft/vcpkg](https://github.com/Microsoft/vcpkg). Then run the vcpkg-bootstrapper script to set it up. For detailed installation instructions, see [Install vcpkg](https://docs.microsoft.com/en-us/cpp/build/install-vcpkg). To integrate vcpkg with your Visual Studio or Visual Studio Code development environment, see [Integrate vcpkg](https://docs.microsoft.com/en-us/cpp/build/integrate-vcpkg). Then, to use vcpkg to install or update a library, see [Manage libraries with vcpkg](https://docs.microsoft.com/en-us/cpp/build/manage-libraries-with-vcpkg). For more information about vcpkg commands, see [vcpkg command-line reference](https://docs.microsoft.com/en-us/cpp/build/vcpkg-command-line-reference).
 
 👀 EZC3D is available in VCPKG since [2020-11 release](https://github.com/microsoft/vcpkg/releases/tag/2020.11)
+
+## Compile via `setup.py`
+This way of "installing" is mostly for convenience when developing on ezc3d and the python-wrapper. It is **not** recommended for normal usage. Refer to [Anaconda](#anaconda-for-windows-linux-and-mac) for that.
+
+The call is similar to the following (example for windows). (`pip install` is **not** supported)
+```powershell
+python .\setup.py develop -- -G"Visual Studio 16 2019" -A x64 -DSWIG_EXECUTABLE="D:/swigwin-4.0.2/swig.exe" -DSWIG_DIR="D:/swigwin-4.0.2/Lib"
+```
 
 # How to use
 The aim of EZC3D is to be, indeed, eazy to use. Still, it is a C++ library and therefore requires some time to adapt. This section aims to help you level up as fast as possible, in order to enjoy EZC3D as fast as possible. 
@@ -201,7 +226,7 @@ The C3D class mimics the C3D structures as defined by the standard, that is sepa
 ### Copying the C3D class
 Please not that a copy of a c3d class will results in a shallow copy
 
-#### Get a value from the header 
+#### Get a value from the header <!-- omit from toc -->
 To retrieve some information from the header, just call the `header` class and then the specific information you are interested in. If for example, you want to get the frame rate of the cameras, you should do as follow:
 ```C++
 ezc3d::c3d c3d("path_to_c3d.c3d");
@@ -209,10 +234,10 @@ float pointRate(c3d.header().frameRate());
 ```
 Please note that the names mimics those used by the C3D format as described by the c3d.org documentation. For more information on what you can get from the header, please refer to the documentation on [header](https://pyomeca.github.io/Documentation/ezc3d/classezc3d_1_1Header.html).
 
-#### Set a value to the header
+#### Set a value to the header <!-- omit from toc -->
 It is not possible from outside to add, remove or even modify the header directly. The reason for that is that the header has a very specific formatting to be compliant to the standard. Therefore, the header will update itself if needed when the parameters class is modify. If it doesn't this is a bug that should be reported. 
 
-#### Get a parameter
+#### Get a parameter <!-- omit from toc -->
 Parameters in C3D are arranged in a GROUP:PAMETER manner and the classes in EZC3D mimic this arrangement. Therefore a particular parameter always stands inside of a group. For example, if you are interested in the labels of the points, you can navigate up to the POINT group and then to the LABELS parameter. 
 ```C++
 ezc3d::c3d c3d;
@@ -223,7 +248,7 @@ for (size_t m = 0; m < point_labels.size(); ++m){
 ```
 For more information on what you can get from the parameters, please refer to the documentation on [parameters](https://pyomeca.github.io/Documentation/ezc3d/classezc3d_1_1ParametersNS_1_1Parameters.html).
 
-#### Set a parameter 
+#### Set a parameter <!-- omit from toc -->
 To set a parameter into a group, you must call the accessor method provided into the `c3d` class. The first parameter of the function is the name of the group to set the new parameter in, and the second parameter of the function is the actual parameter to set.
 ```C++
 ezc3d::c3d c3d;
@@ -233,7 +258,7 @@ c3d.parameter("GroupName", param); // Add the parameter to the c3d structure
 ```
 Please note that if this parameter already exist in the group named "GroupName", then this parameter is replaced by the new one. Otherwise, if it doesn't exist or the group doesn't exist, then it is added to the group or the group is created then the parameter is added. For more information on how to set a new parameter from `c3d` accessors methods, please refer to the documentation on [c3d](https://pyomeca.github.io/Documentation/ezc3d/classezc3d_1_1c3d.html).
 
-#### Get data
+#### Get data <!-- omit from toc -->
 Point and analogous data are the core of the C3D file (please note that rotation data are also available, but are non-standard). To understand the structure though it is essential to understand that everything is based on points. For example, the base frame rate the point frame rate, while the analogous data is based on the number of data per point frame. Therefore to get a particular point in time, you must get the data at a certain frame and specify which point you are interested in, while to get a particular analogous data you must also specify the subframe.
 ```C++
 ezc3d::c3d c3d("path_to_c3d.c3d");
@@ -244,10 +269,10 @@ channel.print();
 ```
 For more information on what you can get from the points, please refer to the documentation on [points](https://pyomeca.github.io/Documentation/ezc3d/classezc3d_1_1DataNS_1_1Points3dNS_1_1Points.html) or [analogs](https://pyomeca.github.io/Documentation/ezc3d/classezc3d_1_1DataNS_1_1AnalogsNS_1_1Analogs.html).
 
-#### Set data 
+#### Set data <!-- omit from toc -->
 There are two ways to add data to the data set. 
 
-##### Using the c3d accessor
+##### Using the c3d accessor <!-- omit from toc -->
 The first and prefered way is to add a frame via the accessors method of the class `c3d`. The parameter to send is the filled frame to add/replace to the data structure. 
 Please note that the points and channel must have been declare to the parameters before adding them to the data set. This is so the whole c3d structure is properly harmonized. 
 Please also note, for the same reason, that POINT:RATE and ANALOG:RATE must have been declared before adding points and analogs. 
@@ -304,7 +329,7 @@ c3d_empty.print();
 ```
 For more information on how to set data from `c3d` accessors methods, please refer to the documentation on [c3d](https://pyomeca.github.io/Documentation/ezc3d/classezc3d_1_1c3d.html).
 
-##### Using the "non-const" reference
+##### Using the "non-const" reference <!-- omit from toc -->
 The second method is more designed for internal purpose. However, you may find yourself in situation where the normal method is just to long or restrictive for what you want to do. Then you can access directly the data via a reference. For example, you can add channels that way:
 ```C++
 // Add a new analog to the c3d (one filled with zeros, the other one with data)
@@ -486,7 +511,7 @@ c = c3d()
 print(c['parameters']['POINT']['USED']['value'][0]);  # Print the number of points used
 ```
 
-#### Understanding the output
+#### Understanding the output <!-- omit from toc -->
 The `c3d` instance returned by the `c3d('path_to_c3d.c3d')` mimics the internal structure of a C3D, that is a `header` section, a `parameters` section and a `data` section. 
 The `header` section is a standard read-only section and mostly contain redundant information with `parameters`. 
 The `parameters` section is partly standard, partly based on the data of the file. 
