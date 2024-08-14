@@ -51,18 +51,18 @@ foreach(SUFFIXES Read Write)
             )
         endif(CMAKE_CL_64)
     elseif(APPLE)
-        if (CMAKE_SYSTEM_PROCESSOR STREQUAL "x86_64")
+        if (CMAKE_HOST_SYSTEM_PROCESSOR STREQUAL "x86_64")
             set_target_properties(${PROJECT_NAME}_${SUFFIXES} PROPERTIES
                 SUFFIX ".mexmaci64"
                 PREFIX ""
             )
-        elseif(CMAKE_SYSTEM_PROCESSOR STREQUAL "arm64") 
+        elseif(CMAKE_HOST_SYSTEM_PROCESSOR STREQUAL "arm64") 
             set_target_properties(${PROJECT_NAME}_${SUFFIXES} PROPERTIES
                 SUFFIX ".mexmaca64"
                 PREFIX ""
             )
         else()
-            message(FATAL_ERROR "Unknown architecture: ${CMAKE_SYSTEM_PROCESSOR}") 
+            message(FATAL_ERROR "Unknown architecture: ${CMAKE_HOST_SYSTEM_PROCESSOR}") 
         endif ()
     else()
         if (CMAKE_SIZEOF_VOID_P MATCHES "8")
@@ -76,7 +76,7 @@ foreach(SUFFIXES Read Write)
                 PREFIX ""
             )
         endif (CMAKE_SIZEOF_VOID_P MATCHES "8")
-    endif(WIN32)
+    endif()
 
 
     # Set runtime path for linux
