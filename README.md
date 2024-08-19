@@ -522,8 +522,8 @@ To access the data, one can use the dictionary notation or the dot notation.
 ```python3
 from ezc3d import c3d
 c = c3d()
-print(c['parameters']['POINT']['USED']['value'][0]
-print(c.parameters.POINT.USED['value'][0]
+print(c['parameters']['POINT']['USED']['value'][0])
+print(c.parameters.POINT.USED['value'][0])
 ````
 The dictionnary notation better reflects the internal structure of the C3D class, which makes it more reliable. 
 However, it is less convenient to use as one need to check the existing "keys" during programming.
