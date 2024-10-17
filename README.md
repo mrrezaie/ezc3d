@@ -186,9 +186,9 @@ The call is similar to the following (example for windows).
 ```powershell
 python .\setup.py sdist bdist_wheel -- -G"Visual Studio 17 2022" -A x64 -DSWIG_EXECUTABLE="D:/swigwin-4.0.2/swig.exe" -DSWIG_DIR="D:/swigwin-4.0.2/Lib"
 ```
-The `bdist_wheel` command will create a wheel file which can be installed via `pip`:
+The wheel file in the `dist` folder can be installed via `pip`:
 ```powershell
-python install ./dist/zzz.whl
+pip install ./dist/zzz.whl
 ```
 
 # How to use
