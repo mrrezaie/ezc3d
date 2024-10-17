@@ -182,9 +182,13 @@ An automated script for compilation is offered on vcpkg. Install vcpkg by making
 ## Compile via `setup.py`
 This way of "installing" is mostly for convenience when developing on ezc3d and the python-wrapper. It is **not** recommended for normal usage. Refer to [Anaconda](#anaconda-for-windows-linux-and-mac) for that.
 
-The call is similar to the following (example for windows). (`pip install` is **not** supported)
+The call is similar to the following (example for windows).
 ```powershell
-python .\setup.py develop -- -G"Visual Studio 16 2019" -A x64 -DSWIG_EXECUTABLE="D:/swigwin-4.0.2/swig.exe" -DSWIG_DIR="D:/swigwin-4.0.2/Lib"
+python .\setup.py sdist bdist_wheel -- -G"Visual Studio 17 2022" -A x64 -DSWIG_EXECUTABLE="D:/swigwin-4.0.2/swig.exe" -DSWIG_DIR="D:/swigwin-4.0.2/Lib"
+```
+The `bdist_wheel` command will create a wheel file which can be installed via `pip`:
+```powershell
+python install ./dist/zzz.whl
 ```
 
 # How to use
